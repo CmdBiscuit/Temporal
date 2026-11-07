@@ -1,0 +1,9 @@
+{
+    "vertex": "temporal:temporal_fullscreen",
+    "fragment": "temporal:temporal_dlss_depth",
+    "samplers": [
+        { "name": "DepthSampler" }
+    ],
+    "uniforms": [
+    ]
+}

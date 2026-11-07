@@ -1,0 +1,11 @@
+{
+    "vertex": "temporal:temporal_fullscreen",
+    "fragment": "temporal:temporal_reactive",
+    "samplers": [
+        { "name": "SceneSampler" },
+        { "name": "OpaqueSampler" },
+        { "name": "TranslucentSampler" }
+    ],
+    "uniforms": [
+    ]
+}

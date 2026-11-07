@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+logoFile="temporal_logo.png"
+logoBlur=true
+authors="CommandCookie, nikaa"
+credits="Uses NVIDIA DLSS, DLSS Frame Generation and Reflex, and AMD FidelityFX Super Resolution. NVIDIA, DLSS and Reflex are trademarks of NVIDIA Corporation; AMD, FidelityFX and FSR are trademarks of Advanced Micro Devices, Inc."
+description='''
+Upscaling, anti-aliasing and frame generation for Minecraft.
+Renders the world at a lower resolution and upscales it with NVIDIA DLSS, AMD FSR 3 or FSR 1, keeping the HUD at full resolution; temporal anti-aliasing (TAA, DLAA, FSR Native AA); and frame generation (NVIDIA DLSS Frame Generation 2x-6x, AMD FSR 3 Frame Generation 2x).
+'''
+
+[[dependencies.${mod_id}]]
+modId="neoforge"
+type="required"
+versionRange="${neo_version_range}"
+ordering="NONE"
+side="CLIENT"
+
+[[dependencies.${mod_id}]]
+modId="minecraft"
+type="required"
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="CLIENT"
+
+[[mixins]]
+config="temporal.mixins.json"

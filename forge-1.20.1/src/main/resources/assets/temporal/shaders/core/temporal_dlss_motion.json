@@ -1,0 +1,16 @@
+{
+    "vertex": "temporal:temporal_fullscreen",
+    "fragment": "temporal:temporal_dlss_motion",
+    "samplers": [
+        { "name": "DepthSampler" },
+        { "name": "EntitySampler" }
+    ],
+    "uniforms": [
+        { "name": "InvViewProj", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+        { "name": "PrevViewProj", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
+        { "name": "CameraDelta", "type": "float", "count": 3, "values": [ 0.0, 0.0, 0.0 ] },
+        { "name": "Jitter", "type": "float", "count": 2, "values": [ 0.0, 0.0 ] },
+        { "name": "EntityCount", "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "HandDepth", "type": "float", "count": 1, "values": [ 0.0 ] }
+    ]
+}

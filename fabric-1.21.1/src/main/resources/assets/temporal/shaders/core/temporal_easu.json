@@ -1,0 +1,10 @@
+{
+    "vertex": "temporal:temporal_fullscreen",
+    "fragment": "temporal:temporal_easu",
+    "samplers": [
+        { "name": "InSampler" }
+    ],
+    "uniforms": [
+        { "name": "OutSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] }
+    ]
+}

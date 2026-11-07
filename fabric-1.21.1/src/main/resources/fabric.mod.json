@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "temporal",
+  "version": "${version}",
+  "name": "Temporal",
+  "description": "Upscaling, anti-aliasing and frame generation for Minecraft. Renders the world at a lower resolution and upscales it with NVIDIA DLSS, AMD FSR 3, NIS or FSR 1, keeping the HUD at full resolution; temporal anti-aliasing (TAA, DLAA, FSR Native AA); and frame generation (NVIDIA DLSS Frame Generation 2x-6x, AMD FSR 3 Frame Generation 2x).\n\nUses NVIDIA DLSS, DLSS Frame Generation and Reflex, and AMD FidelityFX Super Resolution. NVIDIA, DLSS and Reflex are trademarks of NVIDIA Corporation; AMD, FidelityFX and FSR are trademarks of Advanced Micro Devices, Inc.",
+  "authors": ["CommandCookie", "nikaa"],
+  "license": "MIT",
+  "icon": "temporal_logo.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.temporal.client.TemporalClient"],
+    "modmenu": ["com.temporal.client.ModMenuIntegration"]
+  },
+  "mixins": ["temporal.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "fabric-api": "*",
+    "minecraft": "1.21.1",
+    "java": ">=21"
+  }
+}

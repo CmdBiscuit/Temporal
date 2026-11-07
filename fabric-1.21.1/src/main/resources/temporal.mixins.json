@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.temporal.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "DebugScreenOverlayMixin",
+    "GameRendererMixin",
+    "LevelRendererMixin",
+    "MinecraftAccessor",
+    "MinecraftMixin",
+    "RenderSystemMixin",
+    "RenderTargetMixin",
+    "WindowAccessor",
+    "WindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

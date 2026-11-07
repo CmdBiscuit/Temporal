@@ -1,0 +1,10 @@
+{
+    "vertex": "temporal:temporal_fullscreen",
+    "fragment": "temporal:temporal_rcas",
+    "samplers": [
+        { "name": "InSampler" }
+    ],
+    "uniforms": [
+        { "name": "Sharpness", "type": "float", "count": 1, "values": [ 1.0 ] }
+    ]
+}

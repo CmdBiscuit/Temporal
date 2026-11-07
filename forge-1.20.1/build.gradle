@@ -1,0 +1,123 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.141'
+    id 'idea'
+}
+
+version = mod_version
+group = mod_group_id
+// The loader and Minecraft version in the file name keep it apart from the NeoForge 1.21.1 jar.
+base.archivesName = 'temporal-forge-1.20.1'
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+
+    runs {
+        client { client() }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        "${mod_id}" { sourceSet sourceSets.main }
+    }
+}
+
+// Forge 1.20.1 runs on SRG names: the mixin annotation processor writes the refmap that maps them.
+mixin {
+    add sourceSets.main, 'temporal.refmap.json'
+    config 'temporal.mixins.json'
+}
+
+dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // Vulkan bindings for the DLSS bridge. Must match Minecraft's LWJGL (3.3.1 for 1.20.1); pure Java on Windows.
+    jarJar(implementation('org.lwjgl:lwjgl-vulkan')) {
+        version {
+            strictly '[3.3.1,3.3.2)'
+            prefer '3.3.1'
+        }
+    }
+}
+
+// The dev run loads Temporal from source and doesn't unpack jar-in-jar libraries, so it gets Vulkan on the classpath.
+legacyForge.runs.matching { it.name == 'client' }.configureEach { run ->
+    run.additionalRuntimeClasspathConfiguration.dependencies.add(project.dependencies.create('org.lwjgl:lwjgl-vulkan:3.3.1'))
+}
+
+// Optional local test setup.
+if (file('autotest.gradle').exists()) {
+    apply from: 'autotest.gradle'
+}
+
+// NVIDIA Streamline runtime (DLSS). Unpack the SDK into third_party/streamline; only these DLLs ship in the jar.
+def streamlineBin = file('third_party/streamline/bin/x64')
+tasks.named('processResources', ProcessResources) {
+    from(streamlineBin) {
+        include 'sl.interposer.dll', 'sl.common.dll', 'sl.dlss.dll', 'nvngx_dlss.dll', 'nvngx_dlss.license.txt'
+        // DLSS Frame Generation and the Reflex/PCL plugins it requires
+        include 'sl.dlss_g.dll', 'nvngx_dlssg.dll', 'sl.reflex.dll', 'sl.pcl.dll', 'NvLowLatencyVk.dll', 'reflex.license.txt'
+        into 'natives/streamline'
+    }
+    from('third_party/streamline') {
+        include 'license.txt'
+        rename { 'LICENSE-Streamline.txt' }
+    }
+    // AMD FidelityFX SDK 1.1.4 (FSR 3.1, the last release with a Vulkan backend).
+    from('third_party/fidelityfx/PrebuiltSignedDLL') {
+        include 'amd_fidelityfx_vk.dll'
+        into 'natives/fidelityfx'
+    }
+    from('third_party/fidelityfx') {
+        include 'LICENSE.txt'
+        rename { 'LICENSE-FidelityFX.txt' }
+    }
+    // Temporal's own license (MIT), with notes on the third-party parts above.
+    from('LICENSE')
+}
+
+def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    def propertiesToExpand = [
+            mod_id: mod_id,
+            mod_name: mod_name,
+            mod_version: mod_version,
+            mod_license: mod_license,
+            minecraft_version_range: minecraft_version_range,
+            forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range
+    ]
+    inputs.properties propertiesToExpand
+    expand propertiesToExpand
+    from 'src/main/templates'
+    into layout.buildDirectory.dir('generated/sources/modMetadata')
+}
+
+sourceSets.main.resources.srcDir generateModMetadata
+legacyForge.ideSyncTask generateModMetadata
+
+// Forge 1.20.1 finds a mod's mixin configs through its manifest.
+tasks.named('jar', Jar) {
+    manifest.attributes('MixinConfigs': 'temporal.mixins.json')
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 17
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+idea.module {
+    downloadSources = true
+    downloadJavadoc = true
+}
