@@ -27,6 +27,6 @@ DLSS and FSR 3 need NVIDIA's and AMD's SDKs in that folder's `third_party/`; its
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The NVIDIA and AMD components keep their own licenses; LICENSE lists them.
+MIT, see [LICENSE](LICENSE). The NVIDIA and AMD components keep their own licenses; [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt) lists them.
 
 NVIDIA, DLSS and Reflex are trademarks of NVIDIA Corporation. AMD, FidelityFX and FSR are trademarks of Advanced Micro Devices, Inc. Temporal is not affiliated with NVIDIA or AMD.

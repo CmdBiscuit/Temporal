@@ -61,7 +61,7 @@ NVIDIA Image Scaling SDK 1.0.3 (the NIS scaler shader and its filter tables)
            (LICENSE-NIS.txt)
 
 LWJGL 3.3.3 Vulkan bindings
-  Files:   META-INF/jarjar/lwjgl-vulkan-3.3.3.jar
+  Files:   META-INF/jars/lwjgl-vulkan-3.3.3.jar
   License: BSD 3-Clause, Copyright (c) 2012-present Lightweight Java Game
            Library (LICENSE-LWJGL.txt)
 
